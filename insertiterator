@@ -1,0 +1,11 @@
+--insert_iterator--
+//put target entries in src entries before 40
+vector<int> target = {1,2,3,4,5};
+list<int> src = {10,20,30,40,50};
+vector<int>::iterator it = find(target.begin(), target.end(),40);
+//Now we want to insert range of 
+insert_iterator<list<int>> ins_itr(src,it);
+copy(target.being(),target.end() // src 
+          ,ins_itr); // target
+          
+          
