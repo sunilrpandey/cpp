@@ -214,10 +214,12 @@ int main(){
 
 //std:;async
 -  what if you want return value from thread, it returns std::future<T>
-- you can also defer thread call (asyncb) by passing std::launch::defered, instead of std::launch::async
+- when you call async it will not immediately create a new thread, when you pass std::launch::deferred it wont launch but function will be executed in the same thread when retValue.get() will be called. but when you call async with std::launch::async it will create separate thread for function execution. BTW "std::launch::defered|std::launch::async" is default and whether to execute function code in new thread or same thread will depend on implementation
 - thread will be called only when you call retValue.get()
-- you can also pass std:;future to thread functiona and get value passed using get fuction in thread function
+- you can also pass std::future to thread functiona and get value passed using get fuction in thread function
 - in fact you can pass futute that is yet to collected from promise
+- Youc an call fut.get() only once, calling it again will crash the app. Suppose we want to pass same future value to different thread(or async) function, so it will call .get() multiple times, so we might end up defining multiple promise and future for same value which would be quite messy, STD provides std::shared_future what you can initialize using future::share() and pass to function. offcourse param type would now be std::shared_future instead of std::future. 
+
 std::promise p;
 std::future f = p.get_future();
 thread_fun(f).
