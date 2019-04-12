@@ -1,0 +1,23 @@
+Design notes
+Steps
+1. Gather all possible use cases
+2. constraints and Analysis
+3. High level Design : Most basic, few use cases
+4. find bottleneck and solve them
+5. Scalability : A large number of users, loop through 4 & 5 till we get a satisfactroy anser
+
+Pattern in real life
+composite - family tree, filesystem
+Observer - mail post
+Factory/Abstract Factory : Door purchase
+Adaptor - power adapter
+Facade - event management
+
+Builder - meal order in restaurant
+
+Design LRU Cache
+1. use fixed cache size size std::list for cache
+2. Have hashmap to see if page is there in list.. we having map<pageno(int), list::iter> for this
+3. if list is full remove a page at rear
+3. check page(int) in hashmap if there, erase it, push this to front as it will be most recent entry and add this entry to hashmap, if not there add at the begining 
+
