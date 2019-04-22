@@ -41,3 +41,6 @@ Solid Principles
  
   Test Driven Development is an evolutionary approach to development which combines test-first development where you write a test before you write just enough production code to fulfill that test and refactoring
   One view is the goal of TDD is specification and not validation (Martin, Newkirk, and Kess 2003).  In other words, it’s one way to think through your requirements or design before your write your functional code (implying that TDD is both an important agile requirements and agile design technique). Another view is that TDD is a programming technique.  As Ron Jeffries likes to say, the goal of TDD is to write clean code that works
+  
+  cppuTest - a tdd library
+https://www.sparkpost.com/blog/getting-started-cpputest/
