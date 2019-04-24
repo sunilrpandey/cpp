@@ -5,39 +5,40 @@
 using namespace std;
 class LyClass
 {
-	static int id_;
+	static int objCounter_;
 	char * name_ = nullptr;
-	std::string title_;
+	std::string regNo_;
 public:
 	//constructor/destructor
 	LyClass() :name_(nullptr) {
-		id_++; title_ = "temp";
+		objCounter_++; 
+		regNo_ = "temp";
 	}
 	explicit LyClass(const char * name){
 		log("calling constructor!!");
-		id_++;
+		objCounter_++;
 		int len = LyUtil::strLen(name);
 		name_ = new char[len+1];
 		LyUtil::strCpy(name_, name);
-		title_ = std::string("cls_") + to_string(id_);
+		regNo_ = std::string("reg_") + to_string(objCounter_);
 	}
 	~LyClass() {
 		string msg("calling desstructor for : ");
-		msg.append(title_);
+		msg.append(regNo_);
 		
 		log(msg.c_str());
-		id_--;
+		objCounter_--;
 		if (name_) { delete[] name_; name_ = nullptr; }
 	}
 
 	// copyconstructor
 	LyClass(const LyClass& rhs) {
 		log("calling copy constructor!!");
-		id_++;
+		objCounter_++;
 		int len = LyUtil::strLen(rhs.name_);
 		name_ = new char[len+1];
 		LyUtil::strCpy(name_, rhs.name_);
-		title_ = rhs.title_;
+		regNo_ = rhs.regNo_;
 
 	}
 	// assignment operator
@@ -46,21 +47,21 @@ public:
 		if (&rhs == this) {
 			return *this;
 		}
-		id_++;
+		objCounter_++;
 		int len = LyUtil::strLen(rhs.name_);
 		delete[] name_;
 		name_ = new char[len+1];
 		LyUtil::strCpy(name_, rhs.name_);
-		title_ = rhs.title_;
+		regNo_ = rhs.regNo_;
 	}
 	// moveconstructor
 	LyClass(LyClass&& rhs) {
 		log("calling move constructor!!");
-		//id_ = rhs.id_;
+		//objCounter_ = rhs.objCounter_;
 		name_ = rhs.name_;
-		title_ = rhs.title_;
+		regNo_ = rhs.regNo_;
 		rhs.name_ = nullptr;
-		//rhs.title_ = "";
+		//rhs.regNo_ = "";
 	}
 	// move assignment operator
 	LyClass& operator = (LyClass&& rhs) {
@@ -68,24 +69,24 @@ public:
 		if (&rhs == this) {
 			return *this;
 		}
-		//id_ = rhs.id_;
+		//objCounter_ = rhs.objCounter_;
 		name_ = rhs.name_;
-		title_ = rhs.title_;
+		regNo_ = rhs.regNo_;
 		rhs.name_ = nullptr;
-		//rhs.title_ = "";
+		//rhs.regNo_ = "";
 	}
 	//override steamout operator
 	friend ostream& operator << (ostream& os, const LyClass& obj) {
-		os << obj.id_ << "-" << obj.name_;
+		os << endl << "I am : name : " << obj.name_ << " regID : " << obj.regNo_;
 		return os;
 	}
 	
 public: 
 	void show() {
-		cout << "obj_id : " << id_ <<"  name : " << name_ << " title : " << title_ << endl;
+		cout << *this;
 		return;
 	}
 
 };
-int LyClass::id_ = 1001;
+int LyClass::objCounter_ = 1000;
 
