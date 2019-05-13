@@ -5,45 +5,49 @@
 using namespace std;
 class LyClass
 {
-	static int objCounter_;
-	char * name_ = nullptr;
-	std::string regNo_;
+	static int objCounter_; //just to name each object differently
+	char * name_ = nullptr; // from c++11 only 
+	std::string regNo_;		// registeration number 
 public:
 	//constructor/destructor
-	LyClass() :name_(nullptr) {
-		objCounter_++; 
-		regNo_ = "temp";
+	LyClass(char * str = nullptr){
+		if (str) {
+			LyUtil::strCpy(name_, str);
+			objCounter_++;
+			regNo_ = "temp";
+		}
 	}
 	explicit LyClass(const char * name){
-		log("calling constructor!!");
 		objCounter_++;
 		int len = LyUtil::strLen(name);
 		name_ = new char[len+1];
 		LyUtil::strCpy(name_, name);
 		regNo_ = std::string("reg_") + to_string(objCounter_);
+		
+		string msg("constructor : ");
+		msg.append("name : ").append(name_).append("regID : ").append(regNo_);
+		log(msg.c_str());
 	}
 	~LyClass() {
-		string msg("calling desstructor for : ");
-		msg.append(regNo_);
-		
+		string msg("desstructor : ");
+		msg.append("name : ").append(name_).append("regID : ").append(regNo_);
 		log(msg.c_str());
-		objCounter_--;
 		if (name_) { delete[] name_; name_ = nullptr; }
 	}
 
 	// copyconstructor
 	LyClass(const LyClass& rhs) {
-		log("calling copy constructor!!");
 		objCounter_++;
 		int len = LyUtil::strLen(rhs.name_);
 		name_ = new char[len+1];
 		LyUtil::strCpy(name_, rhs.name_);
-		regNo_ = rhs.regNo_;
-
+		regNo_ = std::string("reg_") + to_string(objCounter_);
+		string msg("copy constructor : ");
+		msg.append("name : ").append(name_).append("regID : ").append(regNo_);
+		log(msg.c_str());
 	}
 	// assignment operator
 	LyClass& operator = (const LyClass& rhs) {
-		log("calling copy assignment!!");
 		if (&rhs == this) {
 			return *this;
 		}
@@ -52,20 +56,25 @@ public:
 		delete[] name_;
 		name_ = new char[len+1];
 		LyUtil::strCpy(name_, rhs.name_);
-		regNo_ = rhs.regNo_;
+		regNo_ = std::string("reg_") + to_string(objCounter_); 
+
+		string msg("copy assignment : ");
+		msg.append("name : ").append(name_).append("regID : ").append(regNo_);
+		log(msg.c_str());
 	}
 	// moveconstructor
 	LyClass(LyClass&& rhs) {
-		log("calling move constructor!!");
 		//objCounter_ = rhs.objCounter_;
 		name_ = rhs.name_;
 		regNo_ = rhs.regNo_;
 		rhs.name_ = nullptr;
 		//rhs.regNo_ = "";
+		string msg("move constructor : ");
+		msg.append("name : ").append(name_).append("regID : ").append(regNo_);
+		log(msg.c_str());
 	}
 	// move assignment operator
 	LyClass& operator = (LyClass&& rhs) {
-		log("calling move assignment!!");
 		if (&rhs == this) {
 			return *this;
 		}
@@ -74,6 +83,9 @@ public:
 		regNo_ = rhs.regNo_;
 		rhs.name_ = nullptr;
 		//rhs.regNo_ = "";
+		string msg("move assignment : ");
+		msg.append("name : ").append(name_).append("regID : ").append(regNo_);
+		log(msg.c_str());
 	}
 	//override steamout operator
 	friend ostream& operator << (ostream& os, const LyClass& obj) {
@@ -82,7 +94,7 @@ public:
 	}
 	
 public: 
-	void show() {
+	void show() const{
 		cout << *this;
 		return;
 	}
