@@ -5,6 +5,35 @@ STL
 PIMPL
 unique_ptr,shared_ptr,weak_ptr conversion
 
+/*
+C++
+  one should alway overload fun(const T&) and fun(T&&), if you do fun(T) it will ambiguous error
+  
+  LyClass&& returnCopy(LyClass lyObj) {
+	LyClass cpObj = lyObj;
+	LyClass cp = std::move(cpObj);
+	return std::move(cp); //as moved object will point to memory that is bound to destroy(cp) 
+						  // so will crash
+						 // return type should 'LyClass' and shoud 'return cp' which will call move constructor
+}						 // keep in mind std::move does some kind of static casting only
+LyClass returnCopy(LyClass lyObj) {
+	LyClass cpObj = lyObj;
+	LyClass cp = std::move(cpObj);
+	return cp; //as moved object will point to memory that is bound to destroy(cp)
+						  // so will crash
+						 // return type should 'LyClass' and shoud 'return cp' which will call move constructor
+}
+// keep in mind std::move does some kind of static casting only
+// so with similar reasons as lvalue referernce never return rvalue reference and try to access(LyClass&& returnCopy(LyClass lyObj))
+// LyClass returnCopy(LyClass lyObj) -> in this case returning std::move(cp) or simply cp will have same effect
+// Even if a func does not have rvalue param version, it wont give error if you pass func(std::move(valParam))
+
+when we pass param as std::vector of pointers/values withs std::move(), after the call even I can acess pointers/values
+	
+
+
+*/
+
 ====C++ legacy e.g. polymorphism
 = default
 = delete or put in private
