@@ -1,0 +1,170 @@
+Few buzzword remaining
+custom deletor
+std::optional, std::function
+STL
+PIMPL
+unique_ptr,shared_ptr,weak_ptr conversion
+
+/*
+C++
+  one should alway overload fun(const T&) and fun(T&&), if you do fun(T) it will ambiguous error
+  
+  LyClass&& returnCopy(LyClass lyObj) {
+	LyClass cpObj = lyObj;
+	LyClass cp = std::move(cpObj);
+	return std::move(cp); //as moved object will point to memory that is bound to destroy(cp) 
+						  // so will crash
+						 // return type should 'LyClass' and shoud 'return cp' which will call move constructor
+}						 // keep in mind std::move does some kind of static casting only
+LyClass returnCopy(LyClass lyObj) {
+	LyClass cpObj = lyObj;
+	LyClass cp = std::move(cpObj);
+	return cp; //as moved object will point to memory that is bound to destroy(cp)
+						  // so will crash
+						 // return type should 'LyClass' and shoud 'return cp' which will call move constructor
+}
+// keep in mind std::move does some kind of static casting only
+// so with similar reasons as lvalue referernce never return rvalue reference and try to access(LyClass&& returnCopy(LyClass lyObj))
+// LyClass returnCopy(LyClass lyObj) -> in this case returning std::move(cp) or simply cp will have same effect
+// Even if a func does not have rvalue param version, it wont give error if you pass func(std::move(valParam))
+
+when we pass param as std::vector of pointers/values withs std::move(), after the call even I can acess pointers/values
+	
+
+
+*/
+
+====C++ legacy e.g. polymorphism
+= default
+= delete or put in private
+override, final(for both class and functions, e.g. class B final : public A)
+can not have static and non-static functio with same name.
+static fun can be called using base n derived and can also be overloaded.
+access specifier works for static member as well, i.e. private member of base can not be accesse by drived class
+exception in destructor ; put problematic code in try/catch. use catch(...) or put problematic code in a different function.
+#virtual constructor query
+	clone function as covariant function where return type is based on class i.e. base class pointer for base and derived class pointer for derived.  
+	Dog * Dog::clone() { return new Dog()} similarly for yellow dog
+	Suppose I have a function Which create new instance of given param
+	Dog * DogGeneartor(Dog* dog) { return dog->clone();} if not clone it would have been like return new Dog(*dog).. and result would have been wrong if someone passes Dog * = DogGeneartor(yellowDogObj);
+- hide base class member funcion by puting B::functions2Hide in private section
+- make all overridden same overloaded function by putting B::overloadedFuncName;
+#In diamond problem B->MD1,MD2->D, will be class MD1 : virtual public B and class MD1 : virtual public B whereas class D : public MD1, public MD2.
+	MD1 and MD2 will not call B's constructor as B is virtual base, if it is necessary to calll B's constuctor it shoud be called from D
+	D(int i) : MD1(i),MD2(i),B(i)  
+	In diamond case only, compiler first try to resolve which functio to call before checking its access permission
+- dervied copy constructor will call base class constructor not copy constructor, if you want copy constructor call from derived class copy constructor, call it from derived impl D(const D& rhs): B(rhs)
+- vtable is created at compile time
+Composition -> heart/body
+Aggregation -> Person/House
+Association -> patient/Doctor
+
+- mutable variables can be changed by const functions
+
+- Exception to operator overloading
+.,?:, ::,.*
+- Implement both function overloading if param are of different types
+- prefix operator is increment and return for posfix you return object before increment
+- using distance_t = double //alias for double
+- explicit constructor to avoid implicit conversion
+- allocation function new/delete are static by default
+- exception handling does not support implicit type conversion
+- few settings std::noboolalpha, std::isnan
+- extended namespace if we have two or more namespace with same name
+- , operator has least precedence, x = (5,10) will assign 10 to x but if we remove () 5 will be assigned
+
+
+
+
+C++11/4
+#Usage
+use shared_ptr if no virtual destructor as shared_ptr keeps info of derived class
+shared_ptr<Dog> pd = make_shared<YellowDog>() or shared_ptr<Dog> pd = shared_ptr<YellowDog>( new YellowDog());
+std::thread_local acts like a static member but can not be accessed across the thread.
+- unique pointer wont have copy constructor/assignment operator but shared_ptr will have it
+- decltype to be used for deducting type at compile time
+- initializer_list<T> can be used to initialize data member of a function or can be passed as param to any function 
+- correct way of implementing move constructor for base class
+	Derived(Derived&& rhs):Base(std::move(rhs){}
+###lambda function:
+[capture](params)mutable(optional)->returntype{body}
+- [] all local variable are accessible but no modification inside or update  outside. if you want to update inside but no update outside use 'mutable'
+- to reflect change in variables modified inside lambda use [&]
+- Be specific to pass by value or ref by specifying insde []
+- here is various combination whose meaning is obvious [a,&b],[&a,b],[&,a][a,&],[=,&a][&a,=] etc
+##Variadic template : template function that can take multiple argument
+	void print() {} // to handle base case
+	template<typename T, typename... S>
+	void print(T 1st, S... 2nd) {
+	cout << 1st; print(2nd); }
+std::promise, std::thread, std::future, std::once_flag are not copyable, 
+std::shared_future is copyable
+
+##std::packaged_task
+std::packaged_task wraps any Callable target (function, lambda expression, bind expression, or another function object) so that it can be invoked asynchronously. Its return value or exception thrown is stored in a shared state which can be accessed through std::future objects.
+std::packaged_task<int(double,char)> task // can be a func that takes dboule and char as arg and return int. we can tweak a function by using binding it to soem know arg using std::bind
+std::packaged_task and std::function works similar but packaged_task returns future which needs to be received and handled
+
+#std::function 
+function also works similar to packaged_task but in contrast to packaged_task does not return future value.
+##perfect forwarding
+
+##std::tuple
+
+
+##====Template:
+function template:
+class template : 
+- we can have default argument to template template<class T, class S  = int>
+
+- function template specialization
+	template<class T> T max(T x,T y), for this specialization would be template <> char * max<char*>(char* x, char * y)
+	we can specialize even a memeber of class
+	template<> 
+	void TempClass<double>::print(){} suppose we have template<class T> class TempClass {print();Plea}  
+	////because if we do template<> TempClass<Double>{} you will have to write whole class copy for double
+- paritial template specialization : can have non type parameter e.g.
+	template<class T, int size>
+		class StaticArray { }
+		suppose we want it specialize for char and use it, it wouldd be template<> StaticArray<char,14> and compiler will create code for 14. another invocation with size 4 will create another code. here is the solution
+	template<int size>
+		print(StaticArray<char,size>* array) and class wouldb
+	template<int size>
+	class StaticArray<Double,size> {} OR member function
+	template<int size>
+	StaticArray<Double,size>::print(){}
+- we can also inherit class to paritially specialize to avoid redundancey
+template<class T, int size> class Base_T {}, its general derived class woudl be 
+template<class T, int size> class Derived_T : public Base_T<T,size> {} but its specialized derived class would be
+template<int size> class Derived_Specialized_T<double,size>:public Base_T<double,size>{} 
+##template meta programming
+template<int n> struct Fact{ enum {value = n * Fact<n-1>::value};};
+template<> struct Fact<1> {enum {value = 1;}}
+Two phase lookup for template
+phase 1 - syntaxes and semantices
+phase 2 : after instantiation
+- each instance of a function or class will have its own copy of static data/variable
+
+##static polymorphism
+template<class T>
+class B {
+public:
+void init();
+void fun();
+execFun(){ // it will exectute B or D' fun based on 
+	static_cast<T*>(this)->exec()
+}
+---
+}
+
+class D : public B<D>{
+public: 
+fun()
+}
+
+unique_ptr<classname> up(new classname)
+up->classFun()
+unique_ptr<classname> up1 = std::move(up);
+
+
+

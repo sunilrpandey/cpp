@@ -1,0 +1,44 @@
+1. class having const/ref as member variable need them initialized in constructor itself
+2. C++ new common features -> = default, = delete, override, final 
+3. Instantiation from heap, make destructor private
+4. Call parametrized base class constructor from similar derived class else it will call default constructor only
+5. if class does not have virtual destructor, shared_ptr to rescue 
+	shared_ptr<Base>pB=shared_ptr<Derived>(new Derived());
+6. copy-constructor should be deleted if have some unsharable resource.
+7. static function can be called using class/object, also can be overloaded.
+8. access qualifier works for static member as well
+9. data alignment guaranteed in struct but not in class
+10. Use singletion if you have to make it global
+11. clone function instead of virtual constructor	 - covariant type
+Base * clone(){}, Derived * clone(){} 
+12. static polymorphism - class D : public B<D> {..} // only hint
+13. composition (heart), Aggregation (House), Association(doctor patient)
+14. Few term - Function object, std::transform
+15. ++i is incrment and return, i++ return and increment
+16. friend ostream& operator << (ostream& out, const A& obj) // should be global;
+17. double& operator()(int row, int col) {return arr[row][col]}
+18 uniform variable initialization int nValue{5},  
+19. constexpr(for compiletime const expression), const for rest
+20. auto - dont use for func parametrized
+21. auto add(int i, int j) -> int
+22. enum class 
+23. using instead of typdef -> using distance_t = double;
+24. for(auto i:v), for(auto& i:v), for(const auto& i:v)// no indexed access, does not work with pointers to an array
+25. static_assert
+26. returning multiple values - tuple => std::tuple<int,float,char>, get<0> to access, tie
+27. non-static member initialization
+28. delegating constructor .. should sink on some constructor
+29. explicit keyword. MyClass(char x) = delete; //if conflix between char and int
+30. Hide base funcs - put them in private section of derived => D::private: using Base::var_name;
+31. const constness, no overload for fun(int) and fun(const int), mutable variable, const_cast<A*>(this)->privateMemVar++;
+32. const A obj; works and calls constructor;
+33. const class, const member function, const reference, const and non const function, overload function based on const
+34. all overloaded func of base class get hidden if derived class implments any
+35. call base class func from derived class object. derObj.BaseClass::funcName()
+36. virtual table - todo
+37. virtual keyword before base class make sure to initialze base class by invoking class only
+38. 
+
+
+
+	

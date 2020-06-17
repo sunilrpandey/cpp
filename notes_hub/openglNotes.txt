@@ -1,0 +1,100 @@
+OpenGL
+
+Topics to be pondered.
+1. VAO
+2. Texture Filtering
+3. Coordinate space
+4. Pixel Shader
+5. Check best forums for opengl
+To Read : https://paroj.github.io/gltut/Positioning/Tutorial%2005.html
+Doubt was if we can have multiple VBO in one VAO, but how can situation arise, if we have multiple attributes in multiple buffers, e.g. posiotion in one colors in other
+Basically VAO does not keep track of bounded buffer but activated attributes which ulitimately knows its bounded buffer
+so in this case you need to enablevertiexAttribArray for both the location and use glVertexAttribArray to associate data.
+i.e.
+1. gen and bind vao
+2. gen and bind, bufferdata the vbo for pos and colors
+3. glEnableVertexAttribArray(0) and glEnableVertexAttribArray(1)
+4. glVertexAttribPointer(0, .... posData)
+5. glVertexAttribPointer(1, .....colorData);
+
+
+pseudo VAO ref : https://stackoverflow.com/questions/26552642/when-is-what-bound-to-a-vao	
+struct VAO{
+    GL_INT element_array_binding; //IBO used for glDrawElements and friends
+    char* label;//for debugging
+
+    struct{//per attribute values
+        bool enabled; //whether to use a VBO for it
+
+        //corresponding to the values passed into glVertexAttribPointer call
+        int size;
+        unsigned int stride; 
+        GL_ENUM type; 
+        bool normalized;
+        bool integer; //unconverted integers
+        bool long; //double precision
+        void* offset;
+        int bufferBinding;//GL_ARRAY_BUFFER bound at time of glVertexAttribPointer call
+
+        int attributeDiviser; //as used for instancing 
+
+    } attributes[MAX_VERTEX_ATTRIBS];
+};
+
+
+Ref : https://computergraphics.stackexchange.com/questions/4637/can-one-vao-store-multiple-calls-to-glvertexattribpointer
+// // two VBOs but one VAO
+GLuint points_vbo = 0;
+glGenBuffers(1, &points_vbo);
+glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
+glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), points, GL_STATIC_DRAW);
+
+GLuint colours_vbo = 0;
+glGenBuffers(1, &colours_vbo);
+glBindBuffer(GL_ARRAY_BUFFER, colours_vbo);
+glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), colours, GL_STATIC_DRAW);
+
+GLuint vao = 0;
+glGenVertexArrays(1, &vao);
+glBindVertexArray(vao);
+glEnableVertexAttribArray(0);
+glEnableVertexAttribArray(1);
+
+
+rendering-loop
+{
+    glBindVertexArray(vao);
+
+    glBindBuffer(GL_ARRAY_BUFFER, points_vbo);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glBindBuffer(GL_ARRAY_BUFFER, colours_vbo);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+}
+In version 4.3+ the vao layout can be set independently from the VBO buffer which allows you to rebind the vbo without having to call vertexAttribPointer every time:
+//in init
+glBindVertexArray(vao);
+
+glVertexAttribFormat(posAttrLoc, 3, GL_FLOAT, false, offsetof(Vertex, pos));
+// set the details of a single attribute
+glVertexAttribBinding(posAttrLoc, 0);
+// which buffer binding point it is attached to
+glEnableVertexAttribArray(posAttrLoc);
+
+glVertexAttribFormat(normalAttrLoc, 3, GL_FLOAT, false, offsetof(Vertex, normal));
+glVertexAttribBinding(normalAttrLoc, 0);
+glEnableVertexAttribArray(normalAttrLoc);
+
+glVertexAttribFormat(texAttrLoc, 2, GL_FLOAT, false, offsetof(Texture, tex));
+glVertexAttribBinding(texAttrLoc, 1);
+glEnableVertexAttribArray(texAttrLoc);
+
+glBindVertexArray(vao);
+foreach(mesh in meshes){
+    glBindVertexBuffer(0, mesh.vbo, mesh.vboOffset, sizeof(Vertex));
+    glBindVertexBuffer(1, mesh.texVbo, mesh.texVboOffset, sizeof(Texture));
+    // bind the buffer to the binding point
+    glDrawArrays(GL_TRIANGLES, 0, mesh.vertexCount);
+    //draw
+}
