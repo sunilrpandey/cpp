@@ -1,4 +1,7 @@
-In case new and new[] functons are not able to allocate memory on heap they call a special function i.e. new-handler. Its a function pointer and you can set your application’s function as new-handler. If and only if this new handler function is sucessful in makeing some memory avialable then only it should return other wise it should exit the application else your application will enter a never ending cycle i.e.
+In case new and new[] functons are not able to allocate memory on heap they call a special function i.e. new-handler. 
+Its a function pointer and you can set your application’s function as new-handler. 
+If and only if this new handler function is sucessful in makeing some memory avialable then only 
+it should return other wise it should exit the application else your application will enter a never ending cycle i.e.
 
 #include <cstdlib>
 #include <new>
