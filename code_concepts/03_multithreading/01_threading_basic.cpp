@@ -35,7 +35,20 @@ struct FunctObject_withMsg
 
 };
 
+class ThreaadLauncher
+{
+    public:
+    void launch(){
+        cout << "\nFrom Thread Launcher.. ";
+    }
+};
+
 int main() {
+    ThreaadLauncher launcher;
+    std::thread tl(&ThreaadLauncher::launch, &launcher);
+    std::this_thread::sleep_for(1000ms);
+    tl.join();
+    return 0;
     //std::thread t1(thread_fun);
     //std::thread thread_funObj((FunctObject()));
     std::string msg2thread("Hello");

@@ -44,6 +44,5 @@ int main()
     auto [pos, success] = record.insert({300,"Parth"});
     cout << endl << pos->first << " : " << pos->second << "\t" << success;
 
-
     return 0;
 }

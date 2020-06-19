@@ -45,13 +45,17 @@ class CppRobot
         cout << "\nDeath : " << name_.c_str(); 
     }
 
-#if 0
+#if NO_OBJECT_ON_HEAP
+void * operator new (size_t sz) = delete;
+#else 
     void * operator new (size_t sz) {
         cout << endl << "allocating space for the Robot!!" << endl;
         return malloc(sizeof(CppRobot)); // can also use malloc(sz)  // we may use it for more space for given object
         //return ::new CppRobot();
 
     }
+#endif
+
     void operator delete (void * p) {
         cout << endl << "freeing allocated space for the Robot!!" << endl;
         //::delete((CppRobot*)p);
@@ -70,8 +74,7 @@ class CppRobot
         return free(p);
 
     }
-    #endif 
-
+ 
 };
 
 int CppRobot::counter = 0;
