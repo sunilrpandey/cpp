@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(01_basic_concepts VERSION 1.0)
+
+include_directories(includes)
 # this cmake script iterate through source files and create exes for sources.
 # exe's names are name of the .cpp file minus .cpp extension
 file( GLOB ALL_SOURCE_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.cpp )
