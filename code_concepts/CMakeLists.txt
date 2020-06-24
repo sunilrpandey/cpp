@@ -11,7 +11,7 @@ project(basic_cmake VERSION 1.1)
 #include(calculate_exe_for_every_cpp.cmake)
 # print_all_variables()
 
-
+set(CMAKE_CXX_FLAGS "--std=c++17")
 add_subdirectory(01_basic_concepts)
 add_subdirectory(02_templates)
 add_subdirectory(03_multithreading)

@@ -1,7 +1,7 @@
 #ifndef CUSTOM_UNIQUE_PTR
 #define CUSTOM_UNIQUE_PTR
 #include <iostream>
-using namespaces std;
+using namespace std;
 template<typename T>
 class LyUniquePtr
 {
