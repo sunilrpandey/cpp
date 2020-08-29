@@ -1,5 +1,6 @@
 #pragma once
 #include <utility>
+#include <memory>
 #include "LyUtils.h"
 class A
 {
@@ -15,6 +16,7 @@ public:
 		log(msg.c_str());
 	}
 	weak_ptr<A> friend_; // instead of 
+	//shared_ptr<A> friend_; // instead of 
 public:
 
 	std::string name() { return name_; }
@@ -36,10 +38,11 @@ public:
 int main()
 {
 	{
-		shared_ptr<A> spA = make_shared<A>("objA");
-		shared_ptr<A> spB = make_shared<A>("objB");
-		spA->setFriend(spB);
-		spB->setFriend(spA);
+			shared_ptr<A> spA = make_shared<A>("objA");
+			shared_ptr<A> spB = make_shared<A>("objB");
+			spA->setFriend(spB);
+			spB->setFriend(spA);
+		
 		//spA.reset(); // that is why weak_ptr is useful
 		spB->showFriend(); // 
 		int i = 0;
