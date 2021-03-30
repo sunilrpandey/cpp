@@ -16,7 +16,6 @@ bool passLambdaFunctionTest_ifAny(const std::array<int,5>& int_array,auto func){
 
     auto greaterthan_5 = std::bind(greaterThan,_1,50);
     return std::any_of(int_array.cbegin(), int_array.cend(), func); 
-
 }
 int main() 
 {

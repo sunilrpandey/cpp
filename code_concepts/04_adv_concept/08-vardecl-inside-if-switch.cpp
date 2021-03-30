@@ -22,22 +22,22 @@ int main()
     //use of using
     using line = std::string;
     using lines = std::vector<line>;
-    lines vecStrings{"Pyarooo", "Neetu", "Sunil"};
+    lines vecStrings{"abc", "def", "ghi"};
 
     #if 0 //Typical way to change till cpp 14 
-        auto iter = find(begin(vecStrings),end(vecStrings),"Neetu");
+        auto iter = find(begin(vecStrings),end(vecStrings),"abc");
         if(iter != vecStrings.end()) {
-            *iter = "Neetu Pandey";
+            *iter = "ABC";
         }
     #endif
 
     // Now if is similar to for loop
-    if(const auto& iter = find(begin(vecStrings),end(vecStrings),"Neetu"); iter != vecStrings.end()) {
-        *iter = "Neetu Pandey";
+    if(const auto& iter = find(begin(vecStrings),end(vecStrings),"abc"); iter != vecStrings.end()) {
+        *iter = "ABC DEF";
     }
     // Now if is similar to for loop
-    if(const auto& iter = find(begin(vecStrings),end(vecStrings),"Sunil"); iter != vecStrings.end()) {
-        *iter = "Sunil Pandey";
+    if(const auto& iter = find(begin(vecStrings),end(vecStrings),"def"); iter != vecStrings.end()) {
+        *iter = "GHI JKL";
     }
     for(auto const& str:vecStrings){
         cout << str << "\t";
@@ -46,7 +46,7 @@ int main()
     
     cout << endl << "Demo: int constexpr(condition)";
     int n = 678;
-    string s = "Sunil Pandey";
+    string s = "abc def";
 
     cout << length(n) << endl << length(s);
 

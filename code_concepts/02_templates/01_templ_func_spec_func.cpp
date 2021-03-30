@@ -7,9 +7,11 @@ Can delete any specialized template function/class (#define DELETE_DOUBLE_SPECIA
 )
 */
 
-#define DELETE_CHAR_SPECIALIZE_TEMP_FUNCTION 0
+#define DELETE_CHAR_SPECIALIZE_TEMP_FUNCTION 1
 
-namespace ly {
+namespace ns_templ 
+{
+
 template<class T>
 T max(T x, T y) {
 	if (x > y)
@@ -25,7 +27,6 @@ double max<double>(double x, double y) {
 	return y;
 }
 
-
 #if DELETE_CHAR_SPECIALIZE_TEMP_FUNCTION 
 template<>
 char  max<char>(char x, char y) = delete; 
@@ -40,13 +41,16 @@ char  max<char>(char x, char y) {
 }
 #endif
 
+void demo_delete_specilized_impl(){
 
+	cout << max(4, 9);
+	cout << max(3.4, 2.5);
+	//cout << max('a', 'b'); // this line will givedemo_delete_specilized_impl
 };
+}
 
 int main()
 {
-	cout << ly::max(4, 9);
-	cout << ly::max(3.4, 2.5);
-	cout << ly::max('a', 'b');
-return 0;
+	ns_templ::demo_delete_specilized_impl();
+	return 0;
 }

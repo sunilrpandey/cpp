@@ -10,7 +10,7 @@ class Dog
 
     Dog(const string & str = ""):name_(str){
         name_.append(to_string(counter++));
-        cout <<  "\nBirth : " << name_.c_str(); 
+        cout <<  "\nBirth : " << name_.c_str() << std::endl; 
     }
     Dog(const initializer_list<string>& vec_str){
         name_ = *(vec_str.begin());
@@ -19,7 +19,10 @@ class Dog
         //cout << "init_list Birth : " << name_.c_str() << endl; 
     }
     ~Dog(){
-        cout << "\nDeath : " << name_.c_str(); 
+        cout << "\nDeath : " << name_.c_str() << std::endl; 
+    }
+    void bark(){
+        cout << "I am " << name_.c_str() << endl;
     }
 
 };
@@ -30,12 +33,13 @@ unique_ptr<Dog> getPtr(const std::string& dname, bool make_unique_flag = true)
     }
     
     unique_ptr<Dog> p(new Dog(dname));
+    //p->bark();
     return p;
 }
 int main()
 {
     // you can use new operator or make_unique to initialize
-    bool use_make_unique = true;
+    bool use_make_unique = false;
     unique_ptr<Dog> p = getPtr("Smoky", use_make_unique);
     cout << endl << "p : " << p->name_;
 

@@ -1,5 +1,5 @@
-#pragma once
-#include "lyclass.h"
+#include "LyClass.h"
+#include <memory>
 #include <utility>
 int main()
 {
@@ -25,7 +25,7 @@ int main()
 	
 	shared_ptr<LyClass> sp = std::move(up2);
 
-	cout << sp.unique() << "count : " << sp.use_count() << endl;
+	cout << sp.unique() << "count : " << sp.use_count() << endl;   
 	shared_ptr<LyClass> sp2 = sp;
 	cout << sp.unique() << "count : " << sp.use_count() << endl;
 	cout << sp2.unique() << "count : " << sp2.use_count();

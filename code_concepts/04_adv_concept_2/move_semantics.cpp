@@ -29,22 +29,24 @@ bufer size is not length + 1
 some variable is always flase/true
 */
 
+namespace ns_common
+{
 class String
 {
     public:
-String() = default;
+    String() = default;
     String(const char * string)
     {
         m_size = strlen(string);
-    m_Data = new char(m_size);
-    memcpy(m_Data, string, m_size * sizeof (char));
+        m_Data = new char[m_size + 1];
+        memcpy(m_Data, string, m_size * sizeof (char));
         cout << "Created " ; 
         print();
    }
    String(const String& rhs)
     {
         m_size = rhs.m_size;
-        m_Data = new char(m_size);
+        m_Data = new char[m_size + 1];
         memcpy(m_Data, rhs.m_Data, m_size * sizeof (char));
         cout << "Copied ";
         print();
@@ -68,7 +70,7 @@ String() = default;
         if(this == &rhs)
             return *this;
         
-        delete m_Data;
+        delete[] m_Data;
         m_size = rhs.m_size;
         m_Data = rhs.m_Data;
         
@@ -77,6 +79,7 @@ String() = default;
         
         cout << "Moved and Assigned";
         print();
+        return *this;
    }
    
    void print()
@@ -95,7 +98,7 @@ String() = default;
         {
         cout << "Destroyed : " ;
         print();
-        delete m_Data;
+        delete[] m_Data;
        }
    }
    private:
@@ -121,41 +124,35 @@ class Entity
     String m_Name;
 };
 
-
-int main()
+void demo_move_semanatics()
 {
-    #define MOVE_SEMANTICS_DEMO 0
-    #define MOVE_ASSIGNMENT_DEMO 1
-    #if MOVE_SEMANTICS_DEMO
-    {
-        //String str = "Robo";
-        Entity entity("Robo");
-        entity.printName();
-    }
-    #endif  //MOVE_SEMANTICS_DEMO
+    Entity entity("Robo");
+    entity.printName();
+}
 
-    #if MOVE_ASSIGNMENT_DEMO
-    //move assignmetn demo
-    cout << "\nmove assigment demo" << endl;
-    {
+void demo_move_assignment()
+{
+    String src = "Source";
+    String dest ;
+    std::cout << "src : ";  src.print();
+    std::cout << "dest : "; dest.print();
+    
+    dest = std::move(src);
 
-        String src = "Source";
-        String dest ;
-        std::cout << "src : ";
-        src.print();
-        std::cout << "dest : ";
-        dest.print();
-        
-        dest = std::move(src);
-
-        std::cout << "src : ";
-        src.print();
-        std::cout << "dest : ";
-        dest.print();
-        
-    }
-    #endif //MOVE_ASSIGNMENT_DEMO
-
-
+    std::cout << "\nAfter move " << std::endl;
+    std::cout << "src : ";
+    src.print();
+    std::cout << "dest : ";
+    dest.print();
+}
+}
+void demo()
+{
+    ns_common::demo_move_semanatics();
+    ns_common::demo_move_assignment();
+}
+int main()
+{    
+    demo();
     return 0;
 }

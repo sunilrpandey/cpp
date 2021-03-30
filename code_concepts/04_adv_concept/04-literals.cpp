@@ -19,7 +19,7 @@ int main()
     cout << "\n let compiler deduce its type : s means second -> " << sa.count() << endl;
     printTime(sa);
 
-    minutes m = 2min;
+    auto m = 2min;
     cout << "\n let compiler deduce its type : min means minuts -> " << m.count() << endl;
     printTime(m);
 

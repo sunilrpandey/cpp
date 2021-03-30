@@ -1,29 +1,41 @@
 #include <iostream>
+#include <initializer_list>
 using namespace std;
 #define MULTIPLE_DEFINE_TEST 10 // it overwritten value would be visible to all the 
+
+void draw_banner(const std::string& demo_name){
+    std::cout << "\n============================================" << std::endl;
+    std::cout << "=====         Demo: " << demo_name << "       ======" << std::endl;
+    std::cout << "============================================\n" << std::endl;    
+}
+
+namespace ns_classsize
+{
 class Base
 {
     public:
     int arr[10];
 
 };
-class MidDer1 : public Base
-{
+class MidDer1 : public Base{};
+class MidDer2 : public Base{};
+class Derived :public MidDer1, public MidDer2{};
 
-};
-class MidDer2 : public Base
-{
-    
-};
-class Derived :public MidDer1, public MidDer2{
-
-};
-
-Base fun1()
-{
+Base fun1() {
     return Base();
 }
 
+int demo_sizeof_derived_class(){
+    
+    cout << endl << "Check size of derived to observe how top base data is copied to bottom derived if not virtually derived.";
+    int sz = sizeof(Derived)/sizeof(int);
+    cout << "Check if Derived has two copy of top base, sizeof Derived : " << sz  ;
+}
+};
+
+
+namespace ns_multdefine
+{
 void modifyDefine(){
    // #define MULTIPLE_DEFINE_TEST 20
     cout << MULTIPLE_DEFINE_TEST;
@@ -32,63 +44,104 @@ void testDefine(){
     cout << MULTIPLE_DEFINE_TEST;
 }
 
-int main()
-{
-    #if 1 // SIZEOF DERIVED CLASS 
-    cout << endl << "Check size of derived to observe how top base data is copied to bottom derived if not virtually derived.";
-    int sz = sizeof(Derived)/sizeof(int);
-    cout << "Check if Derived has two copy of top base, sizeof Derived : " << sz  ;
-
-    //Base fun1(); // Compilable even if it does not receive return value in any variable
-    #endif
+void demo() {
 
     // multiple defines test
     cout << "init define value :" << MULTIPLE_DEFINE_TEST << endl;
     modifyDefine();
-    testDefine();
-    
-    
-    cout << endl << "typedef doubt\n";
+    testDefine();    
+}
+};
+
+namespace ns_misc
+{
+void demo_typedefine(){
+    std::cout << endl << "typedef doubt\n";
     typedef int * i;
     int j = 10;
     i pJ = &j;
     cout << *pJ;
+}
 
-    // Can static variable init with local variable ?
+void demo_init_static_with_local(){
+    // Can static variable init with local variable ?  yes
     int x = 10;
     static int y = x;
     cout << "\nCan static variable init with local variable? Ans : " << (x == y);
+}
 
-    // size of empty array
-    int arr[] = {};
-    cout << endl << "Sizeof empty array is (exected zero) : " << sizeof(arr);
-    
-    
-    cout << endl << "Init from init list";
+class A
+{
+    int i; 
+    int arr[5];
+};
+void demo_size_of_empty_arr(){
+    A arr[] = {};
+    cout << endl << "Sizeof empty array is (exected zero) : " << sizeof(arr);    // is zero
+}
+};
+
+namespace ns_initlist
+{
     class X 
     {
     public:
         int x;
+        float y;
+        float z;
+    X(int i = 0, float j = 0, float k = 0):x(i),y(j),z(k){        
+    }
+    X(std::initializer_list<float> col){
+        x = 100; 
+        auto a  = col.begin();
+        y = *a;
+        a++;
+        z = *a;
+    }
+
+    void show() {
+        std::cout << "x = " << x << "y = " << y << "z = " << z << std::endl;
+    }
     };
  
-    X a = {10};
+void demo(){
+    ::draw_banner("Init from init list");
+    
+    X a = {10,20,30}; // initlist will get priority over constructor
+    a.show();
     X b = a;
-    cout << a.x << " " << b.x;
+    b.show();
+}  
 
-    cout << endl << "What if copy constructor not defined,(default will be used) ";
-    class Point
-    {
-        int x, y;
-    public:
+};
+
+namespace ns_copyconstructor
+{
+class Point
+{
+    int x, y;
+public:
     Point(int i = 0, int j = 0) { x = i; y = j; }
     int getX() { return x; }
     int getY() { return y; }
-    };
- 
-    Point p1;
-    Point p2 = p1;
-    cout << "x = " << p2.getX() << " y = " << p2.getY() ;
+};
 
-    cout << endl;
+void demo_no_copy_constructor() { //default would be called
+    Point p1(3,5);
+    Point p2 = p1;
+    cout << "x = " << p2.getX() << " y = " << p2.getY() << std::endl;
+    }
+}
+
+int main()
+{
+    //ns_classsize::demo_sizeof_derived_class();
+    //ns_multdefine::demo();
+    //ns_misc::demo_typedefine();
+    //ns_misc::demo_init_static_with_local();
+    //ns_misc::demo_size_of_empty_arr();
+    //ns_initlist::demo(); 
+    ns_copyconstructor::demo_no_copy_constructor();
+    
     return 0;
 }

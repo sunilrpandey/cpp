@@ -22,7 +22,7 @@ class LogFile
 
 public:
 	LogFile() {
-		f.open("03_log.txt", std::ofstream::out | std::ofstream::app);
+		f.open("04_log.txt", std::ofstream::out | std::ofstream::app);
 	}
 	void shared_print(std::string msg, int id) {
 		/* deadlock case 
@@ -36,7 +36,7 @@ public:
 		cout << "\n" << msg.c_str() << ",  iter : " << id;
 		
 	}
-	void shared_print2(std::string msg, int id) {
+	void shared_print2(std::string msg, int id) { 
 		/* deadlock case 
 		std::lock_guard<std::mutex> lock2(mu2);
 		std::lock_guard<std::mutex> lock(mu);

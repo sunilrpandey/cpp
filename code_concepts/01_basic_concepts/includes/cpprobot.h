@@ -6,7 +6,9 @@ class CppRobot
 {
     public:
     string name_;
+    static const int k = 32;
     static int counter;
+    char ar[100];
     
     // constructor 
     CppRobot(const string & str = ""):name_(str){
@@ -48,8 +50,11 @@ class CppRobot
 #if NO_OBJECT_ON_HEAP
 void * operator new (size_t sz) = delete;
 #else 
-    void * operator new (size_t sz) {
-        cout << endl << "allocating space for the Robot!!" << endl;
+    void * operator new (size_t sz) {// sz is size of class 
+        #if 1
+        cout << "May not needed sz :" << sz;
+        #endif
+        cout << endl << "Allocating space for the Robot using custom new!!" << endl;
         return malloc(sizeof(CppRobot)); // can also use malloc(sz)  // we may use it for more space for given object
         //return ::new CppRobot();
 
@@ -62,7 +67,9 @@ void * operator new (size_t sz) = delete;
         return free(p);
 
     }
-    void * operator new [] (size_t sz) {
+    void * operator new [] (size_t sz) { 
+        cout << "Total object :" << sz << endl;
+        cout << "Size of CPPRobot :" << sizeof(CppRobot);
         cout << endl << "overloading new[] for the Robot!!" << endl;
         return malloc(sz);
         //return ::new CppRobot();

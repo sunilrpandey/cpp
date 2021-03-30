@@ -2,7 +2,7 @@
 #include <tuple>
 using namespace std;
 
-std::tuple<int, std::string , double> getDetail(int i) 
+auto getDetail(int i) 
 {
     return make_tuple(i,"Sunil",100.0);
 }

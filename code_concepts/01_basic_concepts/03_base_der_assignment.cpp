@@ -3,6 +3,11 @@
 #include <deque>
 using namespace std;
 
+//base object = derived object will call copy constructor of base
+//der object = der object will call copy constructor of derived
+//Copying base to der will result into error
+//copying der to base will slice base part
+
 class A
 {
 public:

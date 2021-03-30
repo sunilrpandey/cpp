@@ -2,7 +2,10 @@
 #include <utility>
 #include <memory>
 #include "LyUtils.h"
-class A
+
+namespace ns_common
+{
+ class A
 {
 	std::string name_;
 public:
@@ -30,22 +33,10 @@ public:
 		if (!friend_.expired())  // check if obj is still alive
 			friend_.lock()->show(); // use lock to invoke shared_ptr
 		else
-			cout << "my friend is expired!" << endl;
+			cout << name_.c_str() << " : my friend is expired!" << endl;
 	}
 
 };
+};
 
-int main()
-{
-	{
-			shared_ptr<A> spA = make_shared<A>("objA");
-			shared_ptr<A> spB = make_shared<A>("objB");
-			spA->setFriend(spB);
-			spB->setFriend(spA);
-		
-		//spA.reset(); // that is why weak_ptr is useful
-		spB->showFriend(); // 
-		int i = 0;
-	}
-	return 0;
-}
+

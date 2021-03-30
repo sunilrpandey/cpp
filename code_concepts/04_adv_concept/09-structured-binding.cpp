@@ -5,7 +5,7 @@
 using namespace std;
 std::tuple<int, std::string , double> getDetail(int i) 
 {
-    return make_tuple(i,"Sunil",100.0);
+    return make_tuple(i,"abc",100.0);
 }
 struct  st
 {
@@ -34,14 +34,14 @@ int main()
     cout << endl << "Demo : data from map : " << endl;
 
     std::map<int,std::string> record;
-    record[100] = "Sunil";
-    record[200] = "Neetu";
-    record[300] = "Charvi";
+    record[100] = "abc";
+    record[200] = "def";
+    record[300] = "ghi";
     for(auto[roll, name] : record) {
         cout << roll << ": " << name << endl;
     }
 
-    auto [pos, success] = record.insert({300,"Parth"});
+    auto [pos, success] = record.insert({300,"jkl"});
     cout << endl << pos->first << " : " << pos->second << "\t" << success;
 
     return 0;

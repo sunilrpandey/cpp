@@ -3,20 +3,16 @@
 #include <vector>
 using namespace std;
 /*
-you can not change values inside lambda funciton it is not mutable
+you can not change values inside lambda funciton if bit is not mutable
 also mutable will not change its value outside lambada if you dont pass this value as ref
 */
 
-void fun_display(int num)
-{
-	cout << num << "\t";
-}
 
 class OddCounter
 {
   public:
 	void update(const std::vector<int>& vec) {
-		for_each(vec.begin(),vec.end(),[&](int num) {
+		for_each(vec.begin(),vec.end(),[&](int num) { //[this] also works
 			if( num % 2 ){
 				counter_++;
 			}
@@ -42,6 +38,9 @@ class Storage
 
 };
 
+void fun_display(int num){
+	cout << num << "\t";
+}
 void demoDisplayContentUsingLambda()
 {
 	int arr[]{10,20,30,40,50};
@@ -76,7 +75,7 @@ void mutableLambdaDemo()
 									num/= devisor;
 									cout << num << "\t";
 									devisor = 6; // you can not change it here as well if dont write you lambda function as mutable
-												// even mutable will not change its value outside leambada if you dont pass this value as ref
+												// even mutable will not change its value outside lambada if you dont pass this value as ref
 									numIter++;
 									}
 									);
@@ -85,8 +84,18 @@ void mutableLambdaDemo()
 }
 
 
+void demo_init_lambda_param()
+{
+	cout << "init_lambda_param" << endl;
+	
+	int a = 8, b = 2;
+	[&, &b=a](){a += b;}();
+	cout << a << "   " << b << endl;
+
+}
 int main()
 {
+	demo_init_lambda_param();
 	//demoDisplayContentUsingLambda();
 	//mutableLambdaDemo();								
 	

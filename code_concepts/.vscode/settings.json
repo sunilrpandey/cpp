@@ -48,7 +48,11 @@
         "condition_variable": "cpp",
         "future": "cpp",
         "mutex": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "bit": "cpp",
+        "cstring": "cpp",
+        "numeric": "cpp",
+        "random": "cpp"
     },
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true

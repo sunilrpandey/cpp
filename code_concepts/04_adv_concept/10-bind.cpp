@@ -51,17 +51,21 @@ int main()
 	int arr[5] = { 10,3,45,21,90 };
 	cout << std::boolalpha << "\ntotal num divided by 5 : " << count_if(arr, arr + 5, divisibleBy5) << endl;
 
-	// in below example 50  is bound as first argument, first param provided to sum2 will go as second param and 
-	// second param as first argument 
 	
 	// a - b + c	== 200
 	cout << "\nsum3 = " << sum3(100, 200, 300);
 	
+	// in below example 50  is bound as first argument, first param provided to sum2 will go as second param and 
+	// second param as first argument 
 	auto sum2 = std::bind(&sum3,50,_2,_1);
 	// here a = 50 b = 300(_2), c = 200(_1)
 	// 50 - 300 + 200 = -50
 	cout << "\nsum2 = " << sum2(200,300);
 
+	auto sum4 = std::bind(&sum3,_2,50,_1);
+	cout << "\nsum4 = " << sum4(200,300);
+	// here a = 300(_2) b = 50, c = 200(_1)
+	// 300 - 50 + 200 = 450
 
 	cout << endl;
 	return 0;
