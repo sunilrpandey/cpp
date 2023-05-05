@@ -23,6 +23,7 @@ class Final : public virtual BaseFinal
     static const int i = 10;
 };
 
+//test comments for final class object
 #define FINAL_CLASS_OBJECT 0
 
 #if FINAL_CLASS_OBJECT
