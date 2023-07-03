@@ -43,7 +43,6 @@ int main()
     DerivedFormFinalClass final_obj;
     cout << final_obj.i << endl; 
     #else 
-    cout << "Final class implementation, to check see #if part" << endl;
     #endif
 
     return 0;

@@ -21,7 +21,7 @@ int main()
 	upTest->print();
 	
 
-#if LY_COPYTEST
+#if LY_COPY_TEST
 	//copy from other object will not work(copy constructor will not work)
 	LyUniquePtr<LyTestClass> upTestCopy = upTest;
 #endif 

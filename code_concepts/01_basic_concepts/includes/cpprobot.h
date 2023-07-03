@@ -21,6 +21,7 @@ class CppRobot
         CppRobot(name_);
     }
 
+
     // construction from init list 
     CppRobot(const CppRobot& rhs){
         name_ = rhs.name_;
@@ -48,6 +49,7 @@ class CppRobot
     }
 
 #if NO_OBJECT_ON_HEAP
+cout << "NO_OBJECT_ON_HEAP is defined now :";
 void * operator new (size_t sz) = delete;
 #else 
     void * operator new (size_t sz) {// sz is size of class 
