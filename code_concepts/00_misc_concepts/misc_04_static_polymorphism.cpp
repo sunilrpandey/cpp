@@ -18,13 +18,21 @@ class Base
 class Derived : public Base<Derived>
 {
     public:
-    void funToBeOverridden() {cout << "\nDerived Impl";}
+    void init() { cout << endl << "Derived init done";} // only this will be called from funToBeOverridden
+    void funToBeOverridden() {
+        init();
+        cout << "\nDerived Impl";
+        }
 };
 
 int main()
 {
     Base<Derived> der_base;
     der_base.demoDynamicPolymorphism();
+    
+    // below two lines wont work
+    //Base<Base> bs_base; 
+    //bs_base.demoDynamicPolymorphism();
     cout << endl;
     return 0;
 }
