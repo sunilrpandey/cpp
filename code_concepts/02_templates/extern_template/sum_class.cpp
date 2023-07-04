@@ -15,5 +15,5 @@ T SumElements<T>::sum(){
     }
     return total;
 } 
-//template class SumElements<int>;
+template class SumElements<int>;
 template class SumElements<double>;

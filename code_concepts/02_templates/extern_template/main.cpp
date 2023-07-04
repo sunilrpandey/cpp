@@ -1,6 +1,9 @@
 #include "sum_class.h"
-//extern template class SumElements<int>;
-//extern template class SumElements<double>;
+// compile using 
+// g++ -g  .\sum_class.cpp .\main.cpp
+
+extern template class SumElements<int>;
+extern template class SumElements<double>;
 int main(){
     SumElements<int> num{1,2,3,4,5};
     std::cout << "Sum : " <<  num.sum() << std::endl; 
