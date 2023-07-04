@@ -28,8 +28,11 @@ Base fun1() {
 int demo_sizeof_derived_class(){
     
     cout << endl << "Check size of derived to observe how top base data is copied to bottom derived if not virtually derived.";
-    int sz = sizeof(Derived)/sizeof(int);
-    cout << "Check if Derived has two copy of top base, sizeof Derived : " << sz  ;
+    //int sz = sizeof(Derived)/sizeof(int);
+    int size_base = sizeof(Base);
+    int size_derived = sizeof(Derived);
+    cout << "Check if Derived has two copy of top base! \nsizeof Base : " << sizeof(Base) <<   "\nsizeof Dervied : " << sizeof(Derived) ;
+    cout << "\n Anyways ! \nsizeof MidDer1 : " << sizeof(MidDer1) <<   "\nsizeof MidDer2 : " << sizeof(MidDer2) ;
 }
 };
 
@@ -122,26 +125,28 @@ class Point
     int x, y;
 public:
     Point(int i = 0, int j = 0) { x = i; y = j; }
+    //Point(const Point&) = delete; // no default copy constructor would be called if uncomment this line or define and keep it in private section
     int getX() { return x; }
     int getY() { return y; }
 };
 
 void demo_no_copy_constructor() { //default would be called
     Point p1(3,5);
-    Point p2 = p1;
+    Point p2 = p1; // will give error if copy constructor is private or deleted
     cout << "x = " << p2.getX() << " y = " << p2.getY() << std::endl;
     }
 }
 
 int main()
 {
-    //ns_classsize::demo_sizeof_derived_class();
-    //ns_multdefine::demo();
-    //ns_misc::demo_typedefine();
-    //ns_misc::demo_init_static_with_local();
-    //ns_misc::demo_size_of_empty_arr();
-    //ns_initlist::demo(); 
-    ns_copyconstructor::demo_no_copy_constructor();
+    ns_classsize::demo_sizeof_derived_class();
+    ns_multdefine::demo();
+    ns_misc::demo_typedefine();
+    ns_misc::demo_init_static_with_local();
+    ns_misc::demo_size_of_empty_arr();
+    ns_initlist::demo(); 
+    
+    //ns_copyconstructor::demo_no_copy_constructor();
     
     return 0;
 }
