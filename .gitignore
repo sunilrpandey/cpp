@@ -1,4 +1,5 @@
-*.out
+*.exe
 build/
-ly-build/
 .vscode/
+.vs/
+git
