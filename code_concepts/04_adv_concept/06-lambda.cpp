@@ -28,7 +28,7 @@ class Storage
 	public:
 	Storage():count(0){}
 	int get4divisibleNumbersCount(){
-		for_each(vec.begin(), vec.end(), [&](int n){ 
+		for_each(vec.begin(), vec.end(), [this](int n){ // or use &
 								if(n%4 == 0) 
 									count++; 
 								});
@@ -44,6 +44,7 @@ void fun_display(int num){
 void demoDisplayContentUsingLambda()
 {
 	int arr[]{10,20,30,40,50};
+	
 	//pass function to std algo
 	cout << endl ; for_each(arr, arr+5, &fun_display); //pass function to algo
 
@@ -74,13 +75,14 @@ void mutableLambdaDemo()
 	for_each(arr, arr+5, [=,&numIter](int num) mutable{ 
 									num/= devisor;
 									cout << num << "\t";
-									devisor = 6; // you can not change it here as well if dont write you lambda function as mutable
+									devisor = 6; // you can not change it here if dont write your lambda function as mutable
 												// even mutable will not change its value outside lambada if you dont pass this value as ref
 									numIter++;
 									}
 									);
 	
 	cout << endl << "total elem in arr : " << numIter << endl;	
+	cout << endl << "devisor is not changed, since it was not passe by ref - " << devisor << endl;
 }
 
 
@@ -95,9 +97,9 @@ void demo_init_lambda_param()
 }
 int main()
 {
+	demoDisplayContentUsingLambda();
+	mutableLambdaDemo();								
 	demo_init_lambda_param();
-	//demoDisplayContentUsingLambda();
-	//mutableLambdaDemo();								
 	
 	cout << endl << "Access/update class memeber demo, by passing 'this'/& in [] in lambda function" << endl;
 	std::vector<int> vecOdd{10,13,23,15,18};
