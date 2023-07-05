@@ -49,7 +49,7 @@ void demo_with_int_ptr()//shared pointer assignments and ref count changes demo
     std::shared_ptr<int> spi3 = spi2;
     cout << "\nmade 2 more instance, use count(should be 3) : " << spi3.use_count(); 
 
-    std::shared_ptr<int> spi5(new int(30));
+    std::shared_ptr<int> spi5 = std::make_shared<int>(30);
     std::shared_ptr<int> spi6 = spi5;
     cout << "\nmade 2 instance of int 30, use count(should be 2) : " << spi5.use_count(); 
 
@@ -111,8 +111,8 @@ void demo_custom_deleter()
 
    
 void demo(){
-    //demo_with_int_ptr();
-    //demo_basic_funcs();
+    demo_with_int_ptr();
+    demo_basic_funcs();
     demo_custom_deleter();
 }
 
