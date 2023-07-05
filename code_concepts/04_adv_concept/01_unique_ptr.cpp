@@ -24,7 +24,6 @@ class Dog
     void bark(){
         cout << "I am " << name_.c_str() << endl;
     }
-
 };
 unique_ptr<Dog> getPtr(const std::string& dname, bool make_unique_flag = true)
 {
