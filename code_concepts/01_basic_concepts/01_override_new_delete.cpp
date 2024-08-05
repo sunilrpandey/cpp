@@ -105,8 +105,10 @@ class CppRobot_PN
         count_++;
         name_ = std::string("myrobo").append(std::to_string(count_));
     }
+
+
 };
-unsigned int CppRobot_PN::count_ = 0;
+unsigned int CppRobot_PN::count_ = 100;
 
 
 void demo_placement_new()
@@ -115,6 +117,13 @@ void demo_placement_new()
     CppRobot_PN buffer[2];
     CppRobot_PN * rbt = new (&buffer[1]) CppRobot_PN(); 
     cout << endl << rbt->name_ ;
+
+    //use placement new like this as well
+    CppRobot_PN rbtTemp;
+    CppRobot_PN * rbtPlacementNewUsingLocalObject = new (&rbtTemp) CppRobot_PN();
+    cout << endl<< rbtPlacementNewUsingLocalObject->name_.c_str() << endl;
+    cout << rbtTemp.name_.c_str()<< endl;
+
 }
 
 void demo_overload_new_delete(){
@@ -123,8 +132,8 @@ void demo_overload_new_delete(){
     delete rbt;
 }
 
-void demo_overload_new_delete_array(){
-    CppRobot * rbt = new CppRobot[2];
+void demo_overload_new_delete_array(){  
+    CppRobot * rbt = new CppRobot[20];
     cout << endl << rbt[0].name_ << " and " << rbt[1].name_;
     delete [] rbt;
 }
@@ -136,7 +145,8 @@ int main()
 
     //placement new only provides space from the buffer.. it will call its own constructor.
     //its not casting
-    demo_placement_new();
+    //demo_placement_new();
 
+    
     return 0;
 }

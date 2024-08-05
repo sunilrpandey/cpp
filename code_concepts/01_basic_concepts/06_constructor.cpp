@@ -55,8 +55,9 @@ void demo_destructor_order_when_destructor_is_veritual() {
 }
 void demo_destructor_order_when_destructor_is_not_veritual() {
 
-    cout << "\nget correct destruction order by using shared pointer" << endl;
-    std::shared_ptr<Base> b = std::make_shared<Derived>();    
+    
+    Base * b = new Derived();
+    delete b;
 }
 };
 
@@ -64,6 +65,13 @@ int main(int argc, char* argv[]) {
     // ns_constructor::demo_call_apt_base_constructor();
 
     // ns_constructor::demo_destructor_order_when_destructor_is_veritual();
-    ns_constructor::demo_destructor_order_when_destructor_is_not_veritual();
+    //ns_constructor::demo_destructor_order_when_destructor_is_not_veritual();
+    
+    cout << "\nget correct destruction order by using shared pointer" << endl;
+    {
+        using namespace ns_constructor;
+        std::shared_ptr<Base> b = std::make_shared<Derived>();    
+    }
+
     return 0;
 }
