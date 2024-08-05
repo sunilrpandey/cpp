@@ -29,7 +29,7 @@ class Derived : public Base
 {
     public:
     Derived():Base(){
-        cout << "\nDervied Parameterized constructor!!";
+        cout << "\nDervied default constructor!!";
     }
     Derived(int i , int j, int k){
         x = i;
