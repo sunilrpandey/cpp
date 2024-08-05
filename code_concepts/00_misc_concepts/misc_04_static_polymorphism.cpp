@@ -28,6 +28,8 @@ class Derived : public Base<Derived>
 int main()
 {
     Base<Derived> der_base;
+    //Derived der_base;
+    
     der_base.demoDynamicPolymorphism();
     
     // below two lines wont work

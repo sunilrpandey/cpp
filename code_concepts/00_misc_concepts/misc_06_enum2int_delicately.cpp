@@ -15,8 +15,6 @@ enum class Color : short
     Blue
 };
 
-vector<std::string> colors = {"While"," Black","Red","Gree","Yellow","Blue"};
-
 // typename keyword before  std::underlying_type<E>::type specified that return type is a type rather than a value.
 template <typename E>
 constexpr typename std::underlying_type<E>::type to_underlyingtype(E value) noexcept{
