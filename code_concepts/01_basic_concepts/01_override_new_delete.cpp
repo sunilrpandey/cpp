@@ -1,5 +1,5 @@
-#include <iostream>
 #include "cpprobot.h"
+#include <iostream>
 using namespace std;
 
 /*
@@ -18,15 +18,16 @@ class CppRobot_PN
         name_ = std::string("myrobo").append(std::to_string(count_));
     }
 };
-unsigned int CppRobot_PN::count_ = 0;
-
+unsigned int CppRobot_PN::count_ = 0; 
+ 
 
 void demo_placement_new()
-{
+{ 
     // to demo placement new we need to comment overloaded new and delete operator
-    CppRobot_PN buffer[2];
+    cout << endl << "Demo  : Placement new operator!"  << endl;
+    CppRobot_PN buffer[2];  
     CppRobot_PN * rbt = new (&buffer[1]) CppRobot_PN(); 
-    cout << endl << rbt->name_ ;
+    cout << rbt->name_ << endl; 
 }
 
 void demo_overload_new_delete(){
