@@ -3,7 +3,8 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "home/linus/work/git_space/cpp/code_concepts/01_basic_concepts/includes/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/g++",

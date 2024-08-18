@@ -9,7 +9,15 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/a.out",
-            "args": [],
+            "args": [
+                "-g",
+                "01_override_new_delete.cpp",
+                "-I",
+                "includes",
+                "-o",
+                "a.out"
+                //"${fileDirname}/${fileBasenameNoExtension}"
+            ],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],

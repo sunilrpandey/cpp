@@ -9,13 +9,15 @@
             "command": "/usr/bin/g++",
             "args": [
                 "-g",
-                "${file}",
+                "01_override_new_delete.cpp",
+                "-Ihome/linus/work/git_space/cpp/code_concepts/01_basic_concepts/includes",
                 "-o",
                 "a.out"
                 //"${fileDirname}/${fileBasenameNoExtension}"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
+                
             },
             "problemMatcher": [
                 "$gcc"
