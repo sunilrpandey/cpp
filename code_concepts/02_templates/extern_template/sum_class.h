@@ -11,3 +11,5 @@ class SumElements
     std::vector<T> arr;
 
 };
+
+void callSpecializeFunc();
