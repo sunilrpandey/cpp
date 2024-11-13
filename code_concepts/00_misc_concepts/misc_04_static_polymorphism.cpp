@@ -12,7 +12,7 @@ class Base
     void demoDynamicPolymorphism() {
         init();
         static_cast<T*>(this)->funToBeOverridden();
-        cleanup();        
+        cleanup();
     }
 };
 class Derived : public Base<Derived>
@@ -25,6 +25,10 @@ int main()
 {
     Base<Derived> der_base;
     der_base.demoDynamicPolymorphism();
+
+    Derived d;
+    d.demoDynamicPolymorphism();
+
     cout << endl;
     return 0;
 }
