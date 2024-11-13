@@ -15,9 +15,7 @@ enum class Color : short
     Blue
 };
 
-vector<std::string> colors = {"While"," Black","Red","Gree","Yellow","Blue"};
-
-// need ‘typename’ before ‘std::underlying_type<_Tp>::type’ because ‘std::underlying_type<_Tp>’ is a dependent scope
+// typename keyword before  std::underlying_type<E>::type specified that return type is a type rather than a value.
 template <typename E>
 constexpr typename std::underlying_type<E>::type to_underlyingtype(E value) noexcept{
     return static_cast<typename std::underlying_type<E>::type>(value);

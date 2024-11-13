@@ -9,8 +9,14 @@ constexpr double maxValue<double> = 2000;
 template<>
 constexpr char maxValue<char> = 'z';
 
+template<typename T>
+T maxValue_Var = T(1000);
+
+
 int main()
 {
+    maxValue_Var<float> = 3000; 
+
     cout << maxValue<int>;
     cout << maxValue<char>;
     cout << maxValue<double>;

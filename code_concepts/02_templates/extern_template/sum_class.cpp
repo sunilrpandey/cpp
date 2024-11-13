@@ -14,6 +14,7 @@ T SumElements<T>::sum(){
         total += i;
     }
     return total;
+<<<<<<< HEAD
 }
 
 void callSpecializeFunc()
@@ -34,3 +35,8 @@ void callSpecializeFunc()
 
     //template class SumElements<int>;
     //template class SumElements<double>;
+=======
+} 
+template class SumElements<int>;
+template class SumElements<double>;
+>>>>>>> ab4d1cd6b68696245ad1ad2ec398320a5787cc63

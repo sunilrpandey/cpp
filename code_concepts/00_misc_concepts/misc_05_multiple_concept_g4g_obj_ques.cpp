@@ -9,53 +9,34 @@ void draw_banner(const std::string& demo_name){
     std::cout << "============================================\n" << std::endl;    
 }
 
-namespace ns_classsize
-{
-class Base
-{
-    public:
-    int arr[10];
 
-};
-class MidDer1 : public Base{};
-class MidDer2 : public Base{};
-class Derived :public MidDer1, public MidDer2{};
-
-Base fun1() {
-    return Base();
-}
-
-int demo_sizeof_derived_class(){
-    
-    cout << endl << "Check size of derived to observe how top base data is copied to bottom derived if not virtually derived.";
-    int sz = sizeof(Derived)/sizeof(int);
-    cout << "Check if Derived has two copy of top base, sizeof Derived : " << sz  ;
-}
-};
 
 
 namespace ns_multdefine
 {
 void modifyDefine(){
-   // #define MULTIPLE_DEFINE_TEST 20
+    #define MULTIPLE_DEFINE_TEST 20
     cout << MULTIPLE_DEFINE_TEST;
 }
 void testDefine(){
     cout << MULTIPLE_DEFINE_TEST;
 }
 
-void demo() {
+void demoMultipleDefines() {
 
     // multiple defines test
-    cout << "init define value :" << MULTIPLE_DEFINE_TEST << endl;
-    modifyDefine();
+    cout << endl << "\n\n !---- Multiple defines demo---!";
+    cout << "\ninit define value :" << MULTIPLE_DEFINE_TEST << endl;
+    //modifyDefine(); 
     testDefine();    
+
+    cout << endl << "Takeaway : defines are compile time phenomenon.. will change whether you call it or not";
 }
 };
 
 namespace ns_misc
 {
-void demo_typedefine(){
+void demoTypeDefines(){
     std::cout << endl << "typedef doubt\n";
     typedef int * i;
     int j = 10;
@@ -90,8 +71,10 @@ namespace ns_initlist
         float y;
         float z;
     X(int i = 0, float j = 0, float k = 0):x(i),y(j),z(k){        
+        cout << endl << "init from constructor";
     }
     X(std::initializer_list<float> col){
+        cout << endl << "init from init list";
         x = 100; 
         auto a  = col.begin();
         y = *a;
@@ -122,26 +105,33 @@ class Point
     int x, y;
 public:
     Point(int i = 0, int j = 0) { x = i; y = j; }
+    //Point(const Point&) = delete; // no default copy constructor would be called if uncomment this line or define and keep it in private section
     int getX() { return x; }
     int getY() { return y; }
 };
 
 void demo_no_copy_constructor() { //default would be called
     Point p1(3,5);
-    Point p2 = p1;
+    Point p2 = p1; // will give error if copy constructor is private or deleted
     cout << "x = " << p2.getX() << " y = " << p2.getY() << std::endl;
     }
 }
 
 int main()
 {
-    //ns_classsize::demo_sizeof_derived_class();
-    //ns_multdefine::demo();
-    //ns_misc::demo_typedefine();
-    //ns_misc::demo_init_static_with_local();
-    //ns_misc::demo_size_of_empty_arr();
-    //ns_initlist::demo(); 
-    ns_copyconstructor::demo_no_copy_constructor();
+<<<<<<< HEAD
+    ns_classsize::demo_sizeof_derived_class();
+    ns_multdefine::demoMultipleDefines();
+    ns_misc::demoTypeDefines();
+=======
+    ns_multdefine::demo();
+    ns_misc::demo_typedefine();
+>>>>>>> ccfdbf76adb4ea888d95ee44af1c8e26922d3505
+    ns_misc::demo_init_static_with_local();
+    ns_misc::demo_size_of_empty_arr();
+    ns_initlist::demo(); 
+    
+    //ns_copyconstructor::demo_no_copy_constructor();
     
     return 0;
 }

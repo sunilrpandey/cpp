@@ -1,31 +1,45 @@
 #include <iostream>
 #include <memory>
+using namespace std;
 namespace ns_constructor
 {
 class Base
 {
+public:
     int x, y, z;
 public:
-    Base():x(0),y(0),z(0){}
-    Base(int i , int j, int k):x(i),y(j),z(k){}
-
-    void show() {        
-        std::cout << "x = " << x << "y = " << y << "z = " << z;
+    Base():x(0),y(0),z(0){
+        cout << "\nBase Default constructor!!";
+    }
+    Base(int i , int j, int k):x(i),y(j),z(k){
+        cout << "\nBase Parameterized constructor!!";
     }
 
+    void show() {        
+        std::cout << "\nx = " << x << "y = " << y << "z = " << z;
+    }
+
+    // virtual ~Base() {
     ~Base() {
-        std::cout << "base destructor";
+        std::cout << "\nbase destructor";
     } 
 };
 
 class Derived : public Base
 {
     public:
-    Derived():Base(){}
-    Derived(int i , int j, int k){} // this will call base class default not the 3 arg constructor , should call : Base(i,j,k)
+    Derived():Base(){
+        cout << "\nDervied default constructor!!";
+    }
+    Derived(int i , int j, int k){
+        x = i;
+        y = j;
+        z = k;
+        cout << "\nDerived Parameterized constructor!!";
+    } // this will call base class default not the 3 arg constructor , should call : Base(i,j,k)
 
     ~Derived() {
-        std::cout << "Derived destructor";
+        std::cout << "\nDerived destructor";
     }
 };
 
@@ -41,14 +55,23 @@ void demo_destructor_order_when_destructor_is_veritual() {
 }
 void demo_destructor_order_when_destructor_is_not_veritual() {
 
-    std::shared_ptr<Base> b = std::make_shared<Derived>();    
+    
+    Base * b = new Derived();
+    delete b;
 }
 };
 
 int main(int argc, char* argv[]) {
-    //ns_constructor::demo_call_apt_base_constructor();
+    // ns_constructor::demo_call_apt_base_constructor();
 
-    ns_constructor::demo_destructor_order_when_destructor_is_veritual();
+    // ns_constructor::demo_destructor_order_when_destructor_is_veritual();
     //ns_constructor::demo_destructor_order_when_destructor_is_not_veritual();
+    
+    cout << "\nget correct destruction order by using shared pointer" << endl;
+    {
+        using namespace ns_constructor;
+        std::shared_ptr<Base> b = std::make_shared<Derived>();    
+    }
+
     return 0;
 }

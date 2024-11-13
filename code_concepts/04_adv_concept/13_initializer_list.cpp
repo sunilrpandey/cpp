@@ -29,7 +29,7 @@ int main()
     stInt sti{ 30 };
     sti.show();
 
-    Number number; // can not say number = {30} , if Number(int) or Number(init_list ) is not defined, will work only if none of the constructor is defined
+    Number number = 30; // can not say number = {30} , if Number(int) or Number(init_list ) is not defined, will work only if none of the constructor is defined
     cout << "\ninit member directly, value : " << number.value_;
     
     Number number_from_uniform_init_value = 300 ;// It does not call init_list contructor, will give error if no apt constructor
